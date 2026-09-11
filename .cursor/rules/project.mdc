@@ -1,0 +1,8 @@
+---
+description: Core project conventions for Business Projector
+alwaysApply: true
+---
+
+# Project conventions
+
+Follow [AGENTS.md](../../AGENTS.md). It is the single source of truth for this repo.

@@ -1,0 +1,9 @@
+---
+description: PrimeVue-first Vue UI with stable data-test attributes
+globs: src/**/*.vue
+alwaysApply: false
+---
+
+# Vue UI
+
+Follow the Stack, Layout, and `data-test` sections in [AGENTS.md](../../AGENTS.md).
