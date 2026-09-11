@@ -8,14 +8,14 @@ describe('What’s new changelog', () => {
     cy.getByTestGlobal('changelog-drawer').should('not.exist')
 
     cy.openChangelog()
-    cy.getByTest('changelog-open').should('not.be.visible')
+    cy.getByTest('changelog-open').should('be.visible')
     cy.getByTestGlobal('changelog-title').should('contain', 'What’s new')
     cy.getByTestGlobal('changelog-entry').should('have.length.at.least', 3)
 
     cy.changelogEntry('What’s new').within(() => {
       cy.getByTest('changelog-entry-type').should('contain', 'New')
       cy.getByTest('changelog-entry-title').should('contain', 'What’s new')
-      cy.getByTest('changelog-entry-summary').should('contain', 'star on the right')
+      cy.getByTest('changelog-entry-summary').should('contain', 'star next to Import')
       cy.getByTest('changelog-entry-date').should('contain', '2026')
       cy.getByTest('changelog-entry-link').should(
         'have.attr',

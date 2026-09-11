@@ -26,17 +26,17 @@ function typeSeverity(type) {
 </script>
 
 <template>
-  <div v-show="!visible" class="changelog-launch">
-    <Button
-      icon="pi pi-star-fill"
-      aria-label="What’s new"
-      aria-haspopup="dialog"
-      aria-controls="changelog-drawer"
-      :aria-expanded="visible"
-      data-test="changelog-open"
-      @click="visible = true"
-    />
-  </div>
+  <Button
+    icon="pi pi-star-fill"
+    severity="secondary"
+    outlined
+    aria-label="What’s new"
+    aria-haspopup="dialog"
+    aria-controls="changelog-drawer"
+    :aria-expanded="visible"
+    data-test="changelog-open"
+    @click="visible = true"
+  />
 
   <Drawer
     id="changelog-drawer"
@@ -97,20 +97,6 @@ function typeSeverity(type) {
 </template>
 
 <style scoped>
-.changelog-launch {
-  position: fixed;
-  top: 38%;
-  right: 0;
-  z-index: 20;
-}
-
-.changelog-launch :deep(.p-button) {
-  width: 2.65rem;
-  height: 3.15rem;
-  border-radius: 0.85rem 0 0 0.85rem;
-  box-shadow: -4px 6px 18px rgba(20, 36, 31, 0.14);
-}
-
 .changelog-heading {
   display: flex;
   align-items: center;

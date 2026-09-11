@@ -155,6 +155,7 @@ function onImportFile(event) {
           data-test="hero-import"
           @click="onImportClick"
         />
+        <ChangelogDrawer />
         <Button
           v-if="store.settings.isSampleData"
           label="Start with a blank plan"
@@ -204,8 +205,6 @@ function onImportFile(event) {
     </section>
 
     <ProjectionSpreadsheet />
-
-    <ChangelogDrawer />
 
     <p class="save-note" data-test="save-note">
       Saved automatically in this browser. Export a JSON backup if you want a copy on another computer.

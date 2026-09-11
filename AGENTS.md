@@ -67,7 +67,7 @@ When you add or change interactive UI, add or update the matching `data-test` in
 
 ## Changelog
 
-The star on the right edge opens a PrimeVue `Drawer` fed by `src/data/changelog.js`. That file is the list for **this running build** — do not fetch GitHub at runtime (the app is local, should work offline, and PR titles are often too technical).
+The star next to Import opens a PrimeVue `Drawer` fed by `src/data/changelog.js`. That file is the list for **this running build** — do not fetch GitHub at runtime (the app is local, should work offline, and PR titles are often too technical).
 
 For each **user-visible** feature or bugfix, prepend one short note in the same PR and link to GitHub for details:
 
