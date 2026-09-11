@@ -14,6 +14,8 @@ import ProjectionSpreadsheet from './components/ProjectionSpreadsheet.vue'
 import RevenueEditor from './components/RevenueEditor.vue'
 import { useProjectionStore } from './stores/projection.js'
 
+const GITHUB_REPO_URL = 'https://github.com/jakekohl/small-business-revenue-calculator'
+
 const store = useProjectionStore()
 const confirm = useConfirm()
 const toast = useToast()
@@ -206,6 +208,20 @@ function onImportFile(event) {
     <p class="save-note" data-test="save-note">
       Saved automatically in this browser. Export a JSON backup if you want a copy on another computer.
     </p>
+
+    <footer class="site-footer" data-test="footer">
+      <p data-test="footer-copy">This planner is open source.</p>
+      <Button
+        as="a"
+        :href="GITHUB_REPO_URL"
+        label="View the code on GitHub"
+        icon="pi pi-github"
+        link
+        target="_blank"
+        rel="noopener noreferrer"
+        data-test="footer-github"
+      />
+    </footer>
   </div>
 </template>
 
@@ -300,6 +316,29 @@ h1 {
   margin: 0;
   text-align: center;
   color: #7a8a85;
+  font-size: 0.85rem;
+}
+
+.site-footer {
+  margin-top: 0.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid #d7e4df;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.15rem 0.6rem;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+  color: #7a8a85;
+  font-size: 0.85rem;
+}
+
+.site-footer :deep(.p-button) {
+  padding: 0;
   font-size: 0.85rem;
 }
 

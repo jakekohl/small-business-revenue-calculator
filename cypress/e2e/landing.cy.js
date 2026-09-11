@@ -14,6 +14,12 @@ describe('Landing on the sample plan', () => {
     cy.getByTest('hero-growth').should('be.visible')
     cy.expectSampleBanner(true)
     cy.getByTest('save-note').should('contain', 'Saved automatically')
+    cy.getByTest('footer').should('be.visible').and('contain', 'open source')
+    cy.getByTest('footer-github')
+      .should('be.visible')
+      .and('contain', 'GitHub')
+      .and('have.attr', 'href', 'https://github.com/jakekohl/small-business-revenue-calculator')
+      .and('have.attr', 'target', '_blank')
   })
 
   it('shows sample KPI snapshot values', () => {
