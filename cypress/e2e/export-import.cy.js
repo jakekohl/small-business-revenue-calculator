@@ -12,7 +12,7 @@ describe('Exporting and importing a backup', () => {
         'Signature service',
         'Premium package',
       ])
-      expect(data.expenses).to.have.length(5)
+      expect(data.expenses).to.have.length(6)
       expect(data.expenses[0].name).to.equal('Studio rent')
       expect(data.settings.growthRatePct).to.equal(0)
     })

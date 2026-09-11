@@ -12,7 +12,7 @@ Cypress.Commands.add('expectSampleKpis', () => {
   cy.expectKpi('monthly-revenue', '$5,584')
   cy.expectKpi('monthly-expenses', '$2,469')
   cy.expectKpi('monthly-profit', '$2,395')
-  cy.expectKpi('year-profit', '$28,740')
+  cy.expectKpi('year-profit', '$27,540')
   cy.expectKpi('break-even', '26 units')
 })
 

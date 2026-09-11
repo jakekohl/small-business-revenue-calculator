@@ -13,7 +13,7 @@ describe('Starting with a blank plan', () => {
     cy.expectRevenueCount(0)
     cy.getByTest('revenue-empty').should('contain', 'Add a service or product')
     cy.expectExpenseCount(0)
-    cy.getByTest('expense-empty').should('contain', 'rent, software, supplies')
+    cy.getByTest('expense-empty').should('contain', 'quarterly taxes')
     cy.getByTest('chart-revenue-mix-empty').should('have.text', 'Add a service to see the mix.')
     cy.getByTest('chart-expense-mix-empty').should('have.text', 'Add an expense to see the mix.')
     cy.expectSheetYear('Total revenue', '$0')
