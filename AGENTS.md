@@ -30,6 +30,7 @@ When you add or change interactive UI, add or update the matching `data-test` in
 - Prefer many assertions on a short path over extra specs
 - Clear/seed `inc-exp-calc-projection` via `cy.visitApp()` so runs do not leak
 - Run locally with `npm run test:e2e` (build + preview + Cypress) or `npm run test:e2e:open`
+- Cypress Cloud IDs live in `.env` (`CYPRESS_PROJECT_ID`, `CYPRESS_RECORD_KEY`). Copy `.env.example`; never commit `.env`.
 
 ## Git
 

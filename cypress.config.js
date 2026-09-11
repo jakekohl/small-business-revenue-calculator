@@ -1,6 +1,6 @@
 import { defineConfig } from 'cypress'
-import fs from 'node:fs'
 import dotenv from 'dotenv'
+
 dotenv.config()
 
 export default defineConfig({
@@ -14,12 +14,5 @@ export default defineConfig({
     video: false,
     screenshotOnRunFailure: true,
     downloadsFolder: 'cypress/downloads',
-    setupNodeEvents(on) {
-      on('after:spec', (_spec, results) => {
-        if (results && results.video && results.stats.failures === 0) {
-          fs.unlinkSync(results.video)
-        }
-      })
-    },
   },
 })
