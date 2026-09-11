@@ -7,14 +7,14 @@ import Toast from 'primevue/toast'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
+import ChangelogDrawer from './components/ChangelogDrawer.vue'
 import ExpenseEditor from './components/ExpenseEditor.vue'
 import KpiCards from './components/KpiCards.vue'
 import ProjectionCharts from './components/ProjectionCharts.vue'
 import ProjectionSpreadsheet from './components/ProjectionSpreadsheet.vue'
 import RevenueEditor from './components/RevenueEditor.vue'
+import { GITHUB_REPO_URL } from './data/github.js'
 import { useProjectionStore } from './stores/projection.js'
-
-const GITHUB_REPO_URL = 'https://github.com/jakekohl/small-business-revenue-calculator'
 
 const store = useProjectionStore()
 const confirm = useConfirm()
@@ -204,6 +204,8 @@ function onImportFile(event) {
     </section>
 
     <ProjectionSpreadsheet />
+
+    <ChangelogDrawer />
 
     <p class="save-note" data-test="save-note">
       Saved automatically in this browser. Export a JSON backup if you want a copy on another computer.

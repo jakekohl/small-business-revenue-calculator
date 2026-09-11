@@ -17,3 +17,13 @@ Cypress.Commands.add('reloadApp', () => {
   cy.reload()
   cy.getByTest('app').should('be.visible')
 })
+
+Cypress.Commands.add('openChangelog', () => {
+  cy.getByTest('changelog-open').click()
+  cy.getByTestGlobal('changelog-drawer').should('be.visible')
+})
+
+Cypress.Commands.add('closeChangelog', () => {
+  cy.getByTestGlobal('changelog-close').click()
+  cy.getByTestGlobal('changelog-drawer').should('not.exist')
+})
