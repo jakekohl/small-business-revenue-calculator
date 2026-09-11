@@ -25,6 +25,8 @@ npm run test:e2e:open
 
 ## Cypress Cloud
 
+[![Small Business Calculator](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/erx41d&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/erx41d/runs)
+
 CI records runs to [Cypress Cloud](https://cloud.cypress.io) from `.github/workflows/cypress.yml`.
 
 1. Create a project at [Cypress Cloud](https://cloud.cypress.io).
