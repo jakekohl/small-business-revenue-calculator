@@ -16,6 +16,7 @@ const cards = computed(() => {
   return [
     {
       key: 'rev',
+      test: 'kpi-monthly-revenue',
       label: 'This month’s revenue',
       value: store.money(kpis.monthlyRevenue),
       hint: 'Services + upsells',
@@ -24,6 +25,7 @@ const cards = computed(() => {
     },
     {
       key: 'exp',
+      test: 'kpi-monthly-expenses',
       label: 'This month’s expenses',
       value: store.money(kpis.monthlyExpenses),
       hint: 'Recurring monthly costs',
@@ -32,6 +34,7 @@ const cards = computed(() => {
     },
     {
       key: 'profit',
+      test: 'kpi-monthly-profit',
       label: 'This month’s profit',
       value: store.money(kpis.monthlyProfit),
       hint: 'After service costs & expenses',
@@ -40,6 +43,7 @@ const cards = computed(() => {
     },
     {
       key: 'year',
+      test: 'kpi-year-profit',
       label: 'Year profit',
       value: store.money(kpis.annualProfit),
       hint: '12-month projection',
@@ -48,6 +52,7 @@ const cards = computed(() => {
     },
     {
       key: 'be',
+      test: 'kpi-break-even',
       label: 'Break-even',
       value: breakEven,
       hint: 'Blended units to cover expenses',
@@ -59,15 +64,21 @@ const cards = computed(() => {
 </script>
 
 <template>
-  <section class="kpi-grid" aria-label="Snapshot">
-    <Card v-for="card in cards" :key="card.key" class="kpi-card" :class="`kpi-card--${card.tone}`">
+  <section class="kpi-grid" aria-label="Snapshot" data-test="kpi-grid">
+    <Card
+      v-for="card in cards"
+      :key="card.key"
+      class="kpi-card"
+      :class="`kpi-card--${card.tone}`"
+      :data-test="card.test"
+    >
       <template #content>
         <div class="kpi-card__icon" aria-hidden="true">
           <i :class="card.icon" />
         </div>
-        <p class="kpi-card__label">{{ card.label }}</p>
-        <p class="kpi-card__value">{{ card.value }}</p>
-        <p class="kpi-card__hint">{{ card.hint }}</p>
+        <p class="kpi-card__label" data-test="kpi-label">{{ card.label }}</p>
+        <p class="kpi-card__value" data-test="kpi-value">{{ card.value }}</p>
+        <p class="kpi-card__hint" data-test="kpi-hint">{{ card.hint }}</p>
       </template>
     </Card>
   </section>

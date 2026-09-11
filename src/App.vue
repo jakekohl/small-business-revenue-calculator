@@ -89,19 +89,34 @@ function onImportFile(event) {
 </script>
 
 <template>
-  <Toast />
-  <ConfirmDialog />
+  <Toast
+    :pt="{
+      root: { 'data-test': 'toast' },
+      message: { 'data-test': 'toast-message' },
+      summary: { 'data-test': 'toast-summary' },
+      detail: { 'data-test': 'toast-detail' },
+    }"
+  />
+  <ConfirmDialog
+    :pt="{
+      root: { 'data-test': 'confirm-dialog' },
+      title: { 'data-test': 'confirm-title' },
+      message: { 'data-test': 'confirm-message' },
+      pcAcceptButton: { root: { 'data-test': 'confirm-accept' } },
+      pcRejectButton: { root: { 'data-test': 'confirm-reject' } },
+    }"
+  />
 
-  <div class="app">
-    <header class="hero">
+  <div class="app" data-test="app">
+    <header class="hero" data-test="hero">
       <div class="hero__brand">
         <span class="hero__mark" aria-hidden="true">
           <i class="pi pi-chart-bar" />
         </span>
         <div>
           <p class="hero__eyebrow">For your small business</p>
-          <h1>Business Projector</h1>
-          <p class="hero__lede">
+          <h1 data-test="hero-title">Business Projector</h1>
+          <p class="hero__lede" data-test="hero-lede">
             Try a price change, an upsell, or a new expense and watch the year update as you type.
           </p>
         </div>
@@ -118,25 +133,62 @@ function onImportFile(event) {
             :min-fraction-digits="0"
             :max-fraction-digits="2"
             aria-label="Monthly growth rate"
+            data-test="hero-growth"
             @update:model-value="onGrowthChange"
           />
         </label>
-        <Button label="Export" icon="pi pi-download" severity="secondary" outlined @click="store.exportJson" />
-        <Button label="Import" icon="pi pi-upload" severity="secondary" outlined @click="onImportClick" />
+        <Button
+          label="Export"
+          icon="pi pi-download"
+          severity="secondary"
+          outlined
+          data-test="hero-export"
+          @click="store.exportJson"
+        />
+        <Button
+          label="Import"
+          icon="pi pi-upload"
+          severity="secondary"
+          outlined
+          data-test="hero-import"
+          @click="onImportClick"
+        />
         <Button
           v-if="store.settings.isSampleData"
           label="Start with a blank plan"
           icon="pi pi-eraser"
           severity="danger"
           outlined
+          data-test="hero-blank-plan"
           @click="startBlank"
         />
-        <Button v-else label="Load sample" icon="pi pi-replay" severity="secondary" text @click="restoreSample" />
-        <input ref="fileInput" class="sr-only" type="file" accept="application/json,.json" @change="onImportFile" />
+        <Button
+          v-else
+          label="Load sample"
+          icon="pi pi-replay"
+          severity="secondary"
+          text
+          data-test="hero-load-sample"
+          @click="restoreSample"
+        />
+        <input
+          ref="fileInput"
+          class="sr-only"
+          type="file"
+          accept="application/json,.json"
+          data-test="hero-import-input"
+          @change="onImportFile"
+        />
       </div>
     </header>
 
-    <Message v-if="store.settings.isSampleData" severity="info" :closable="false" class="sample-banner">
+    <Message
+      v-if="store.settings.isSampleData"
+      severity="info"
+      :closable="false"
+      class="sample-banner"
+      data-test="sample-banner"
+    >
       You’re looking at sample numbers so you can see how the planner works. Change anything — or start with a
       blank plan when you’re ready.
     </Message>
@@ -151,7 +203,9 @@ function onImportFile(event) {
 
     <ProjectionSpreadsheet />
 
-    <p class="save-note">Saved automatically in this browser. Export a JSON backup if you want a copy on another computer.</p>
+    <p class="save-note" data-test="save-note">
+      Saved automatically in this browser. Export a JSON backup if you want a copy on another computer.
+    </p>
   </div>
 </template>
 

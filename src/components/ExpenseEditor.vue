@@ -25,25 +25,33 @@ function onDelete(expense) {
 </script>
 
 <template>
-  <Card class="editor">
+  <Card class="editor" data-test="expense-editor">
     <template #title>Monthly expenses</template>
     <template #subtitle>What it costs to keep the business running</template>
     <template #content>
-      <div v-if="!store.expenses.length" class="empty">
+      <div v-if="!store.expenses.length" class="empty" data-test="expense-empty">
         <p>Add rent, software, supplies, and anything else that repeats each month.</p>
-        <Button label="Add an expense" icon="pi pi-plus" @click="store.addExpense" />
+        <Button label="Add an expense" icon="pi pi-plus" data-test="expense-add" @click="store.addExpense" />
       </div>
 
-      <article v-for="expense in store.expenses" :key="expense.id" class="expense" :class="{ 'expense--off': !expense.enabled }">
+      <article
+        v-for="expense in store.expenses"
+        :key="expense.id"
+        class="expense"
+        :class="{ 'expense--off': !expense.enabled }"
+        data-test="expense-row"
+      >
         <ToggleSwitch
           :model-value="expense.enabled"
           :input-id="`exp-on-${expense.id}`"
+          data-test="expense-enabled"
           @update:model-value="store.updateExpense(expense.id, { enabled: $event })"
         />
         <InputText
           :model-value="expense.name"
           placeholder="Expense name"
           aria-label="Expense name"
+          data-test="expense-name"
           @update:model-value="store.updateExpense(expense.id, { name: $event })"
         />
         <Select
@@ -52,6 +60,8 @@ function onDelete(expense) {
           option-label="label"
           option-value="value"
           aria-label="Category"
+          data-test="expense-category"
+          :pt="{ overlay: { 'data-test': 'expense-category-overlay' } }"
           @update:model-value="store.updateExpense(expense.id, { category: $event })"
         />
         <InputNumber
@@ -63,6 +73,7 @@ function onDelete(expense) {
           :min-fraction-digits="0"
           :max-fraction-digits="2"
           aria-label="Monthly amount"
+          data-test="expense-amount"
           @update:model-value="store.updateExpense(expense.id, { amount: $event ?? 0 })"
         />
         <Button
@@ -71,6 +82,7 @@ function onDelete(expense) {
           text
           rounded
           aria-label="Remove expense"
+          data-test="expense-delete"
           @click="onDelete(expense)"
         />
       </article>
@@ -81,6 +93,7 @@ function onDelete(expense) {
         icon="pi pi-plus"
         class="add-more"
         outlined
+        data-test="expense-add"
         @click="store.addExpense"
       />
     </template>

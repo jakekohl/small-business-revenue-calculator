@@ -28,20 +28,27 @@ function onDelete(revenue) {
 </script>
 
 <template>
-  <Card class="editor">
+  <Card class="editor" data-test="revenue-editor">
     <template #title>Revenue opportunities</template>
     <template #subtitle>Price, estimated units, and optional upsells</template>
     <template #content>
-      <div v-if="!store.revenues.length" class="empty">
+      <div v-if="!store.revenues.length" class="empty" data-test="revenue-empty">
         <p>Add a service or product to start projecting revenue.</p>
-        <Button label="Add a service" icon="pi pi-plus" @click="store.addRevenue" />
+        <Button label="Add a service" icon="pi pi-plus" data-test="revenue-add" @click="store.addRevenue" />
       </div>
 
-      <article v-for="revenue in store.revenues" :key="revenue.id" class="opportunity" :class="{ 'opportunity--off': !revenue.enabled }">
+      <article
+        v-for="revenue in store.revenues"
+        :key="revenue.id"
+        class="opportunity"
+        :class="{ 'opportunity--off': !revenue.enabled }"
+        data-test="revenue-card"
+      >
         <header class="opportunity__head">
           <ToggleSwitch
             :model-value="revenue.enabled"
             :input-id="`rev-on-${revenue.id}`"
+            data-test="revenue-enabled"
             @update:model-value="store.updateRevenue(revenue.id, { enabled: $event })"
           />
           <InputText
@@ -49,15 +56,17 @@ function onDelete(revenue) {
             class="opportunity__name"
             placeholder="Service name"
             aria-label="Service name"
+            data-test="revenue-name"
             @update:model-value="store.updateRevenue(revenue.id, { name: $event })"
           />
-          <span class="opportunity__preview">{{ monthlyPreview(revenue) }}/mo</span>
+          <span class="opportunity__preview" data-test="revenue-preview">{{ monthlyPreview(revenue) }}/mo</span>
           <Button
             icon="pi pi-trash"
             severity="danger"
             text
             rounded
             aria-label="Remove service"
+            data-test="revenue-delete"
             @click="onDelete(revenue)"
           />
         </header>
@@ -74,6 +83,7 @@ function onDelete(revenue) {
               :min-fraction-digits="0"
               :max-fraction-digits="2"
               fluid
+              data-test="revenue-price"
               @update:model-value="store.updateRevenue(revenue.id, { unitPrice: $event ?? 0 })"
             />
           </label>
@@ -85,6 +95,7 @@ function onDelete(revenue) {
               :min-fraction-digits="0"
               :max-fraction-digits="2"
               fluid
+              data-test="revenue-units"
               @update:model-value="store.updateRevenue(revenue.id, { unitsPerMonth: $event ?? 0 })"
             />
           </label>
@@ -99,23 +110,26 @@ function onDelete(revenue) {
               :min-fraction-digits="0"
               :max-fraction-digits="2"
               fluid
+              data-test="revenue-cost"
               @update:model-value="store.updateRevenue(revenue.id, { costPerUnit: $event ?? 0 })"
             />
           </label>
         </div>
 
-        <div class="upsells">
+        <div class="upsells" data-test="upsells">
           <p class="upsells__label">Upsells</p>
-          <div v-for="upsell in revenue.upsells" :key="upsell.id" class="upsell">
+          <div v-for="upsell in revenue.upsells" :key="upsell.id" class="upsell" data-test="upsell-row">
             <ToggleSwitch
               :model-value="upsell.enabled"
               :input-id="`up-on-${upsell.id}`"
+              data-test="upsell-enabled"
               @update:model-value="store.updateUpsell(revenue.id, upsell.id, { enabled: $event })"
             />
             <InputText
               :model-value="upsell.name"
               placeholder="Upsell name"
               aria-label="Upsell name"
+              data-test="upsell-name"
               @update:model-value="store.updateUpsell(revenue.id, upsell.id, { name: $event })"
             />
             <InputNumber
@@ -128,6 +142,7 @@ function onDelete(revenue) {
               :max-fraction-digits="2"
               input-id=""
               aria-label="Upsell price"
+              data-test="upsell-price"
               @update:model-value="store.updateUpsell(revenue.id, upsell.id, { extraPrice: $event ?? 0 })"
             />
             <InputNumber
@@ -138,6 +153,7 @@ function onDelete(revenue) {
               :min-fraction-digits="0"
               :max-fraction-digits="1"
               aria-label="Attach rate"
+              data-test="upsell-attach"
               @update:model-value="store.updateUpsell(revenue.id, upsell.id, { attachRatePct: $event ?? 0 })"
             />
             <Button
@@ -146,6 +162,7 @@ function onDelete(revenue) {
               text
               rounded
               aria-label="Remove upsell"
+              data-test="upsell-remove"
               @click="store.removeUpsell(revenue.id, upsell.id)"
             />
           </div>
@@ -155,6 +172,7 @@ function onDelete(revenue) {
             size="small"
             severity="secondary"
             outlined
+            data-test="upsell-add"
             @click="store.addUpsell(revenue.id)"
           />
         </div>
@@ -166,6 +184,7 @@ function onDelete(revenue) {
         icon="pi pi-plus"
         class="add-more"
         outlined
+        data-test="revenue-add"
         @click="store.addRevenue"
       />
     </template>
