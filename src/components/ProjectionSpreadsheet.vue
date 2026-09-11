@@ -63,7 +63,7 @@ const sheetTablePt = {
         scroll-height="36rem"
         size="small"
         show-gridlines
-        table-style="min-width: 78rem"
+        table-style="min-width: 112rem"
         class="sheet"
       >
         <Column field="label" header="Line" frozen style="min-width: 15rem">
@@ -86,6 +86,8 @@ const sheetTablePt = {
               :min="0"
               :min-fraction-digits="0"
               :max-fraction-digits="2"
+              fluid
+              size="small"
               data-test="sheet-price"
               @update:model-value="onPriceChange(data, $event)"
             />
@@ -100,6 +102,8 @@ const sheetTablePt = {
               :min="0"
               :min-fraction-digits="0"
               :max-fraction-digits="2"
+              fluid
+              size="small"
               data-test="sheet-qty"
               @update:model-value="onQtyChange(data, $event)"
             />
@@ -111,6 +115,8 @@ const sheetTablePt = {
               :max="100"
               :min-fraction-digits="0"
               :max-fraction-digits="1"
+              fluid
+              size="small"
               data-test="sheet-qty"
               @update:model-value="onQtyChange(data, $event)"
             />
@@ -209,6 +215,37 @@ const sheetTablePt = {
 }
 
 .sheet :deep(.p-inputnumber) {
-  width: 7.25rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.sheet :deep(.p-inputnumber-input) {
+  width: 100%;
+  min-width: 0;
+}
+
+.sheet :deep(.p-datatable-frozen-column) {
+  background-color: #fff;
+}
+
+.sheet :deep(.sheet-section .p-datatable-frozen-column) {
+  background-color: #eef5f2;
+}
+
+.sheet :deep(.sheet-total .p-datatable-frozen-column) {
+  background-color: #f7faf8;
+}
+
+.sheet :deep(.sheet-profit .p-datatable-frozen-column) {
+  background-color: #ecfdf5;
+}
+
+.sheet :deep(.sheet-profit-neg .p-datatable-frozen-column) {
+  background-color: #fff1f2;
+}
+
+.sheet :deep(th.p-datatable-frozen-column:last-child),
+.sheet :deep(td.p-datatable-frozen-column:last-child) {
+  box-shadow: -6px 0 8px -6px rgba(28, 43, 39, 0.2);
 }
 </style>
