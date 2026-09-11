@@ -28,6 +28,16 @@ Cypress.Commands.add('selectCategory', (label) => {
   cy.getByTestGlobal('expense-category-overlay').should('be.visible').contains(label).click()
 })
 
+Cypress.Commands.add('selectFrequency', (label) => {
+  cy.getByTest('expense-frequency').click()
+  cy.getByTestGlobal('expense-frequency-overlay').should('be.visible').contains(label).click()
+})
+
+Cypress.Commands.add('selectDueMonth', (label) => {
+  cy.getByTest('expense-due-month').click()
+  cy.getByTestGlobal('expense-due-month-overlay').should('be.visible').contains(label).click()
+})
+
 Cypress.Commands.add('confirmAccept', (expectedTitle) => {
   cy.getByTestGlobal('confirm-dialog').should('be.visible')
   if (expectedTitle) {

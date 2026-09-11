@@ -28,7 +28,7 @@ const cards = computed(() => {
       test: 'kpi-monthly-expenses',
       label: 'This month’s expenses',
       value: store.money(kpis.monthlyExpenses),
-      hint: 'Recurring monthly costs',
+      hint: 'Due this month',
       icon: 'pi pi-wallet',
       tone: 'amber',
     },

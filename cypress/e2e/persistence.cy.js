@@ -28,7 +28,7 @@ describe('Saving and restoring a plan', () => {
     cy.expectSampleBanner(true)
     cy.expectSampleKpis()
     cy.expectRevenueCount(2)
-    cy.expectExpenseCount(5)
+    cy.expectExpenseCount(6)
     cy.revenueCard('Signature service').should('be.visible')
     cy.getByTest('hero-blank-plan').should('be.visible')
   })

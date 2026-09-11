@@ -1,4 +1,6 @@
+import { monthLabel } from './format.js'
 import { uid } from './ids.js'
+import { MONTH_COUNT, clampMonthIndex, normalizeExpenseFrequency } from './projectionMath.js'
 
 export const EXPENSE_CATEGORIES = [
   { label: 'Rent & utilities', value: 'rent' },
@@ -7,8 +9,21 @@ export const EXPENSE_CATEGORIES = [
   { label: 'Insurance', value: 'insurance' },
   { label: 'Marketing', value: 'marketing' },
   { label: 'Payroll', value: 'payroll' },
+  { label: 'Taxes', value: 'taxes' },
   { label: 'Other', value: 'other' },
 ]
+
+export const EXPENSE_FREQUENCIES = [
+  { label: 'Monthly', value: 'monthly' },
+  { label: 'Every 3 months', value: 'quarterly' },
+  { label: 'Once a year', value: 'annually' },
+  { label: 'One-time', value: 'once' },
+]
+
+export const EXPENSE_DUE_MONTHS = Array.from({ length: MONTH_COUNT }, (_, index) => ({
+  label: monthLabel(index),
+  value: index,
+}))
 
 export function categoryLabel(value) {
   return EXPENSE_CATEGORIES.find((item) => item.value === value)?.label || 'Other'
@@ -44,6 +59,8 @@ export function createExpense(overrides = {}) {
     name: '',
     amount: 0,
     category: 'other',
+    frequency: 'monthly',
+    startMonth: 0,
     enabled: true,
     ...overrides,
   }
@@ -102,6 +119,13 @@ export function createSampleProjection() {
       createExpense({ name: 'Supplies', amount: 250, category: 'supplies' }),
       createExpense({ name: 'Insurance', amount: 140, category: 'insurance' }),
       createExpense({ name: 'Marketing', amount: 200, category: 'marketing' }),
+      createExpense({
+        name: 'Year-end taxes',
+        amount: 1200,
+        category: 'taxes',
+        frequency: 'annually',
+        startMonth: 11,
+      }),
     ],
   }
 }
@@ -134,6 +158,8 @@ function normalizeExpense(item = {}) {
     name: item.name ?? '',
     amount: Number(item.amount) || 0,
     category: item.category || 'other',
+    frequency: normalizeExpenseFrequency(item.frequency),
+    startMonth: clampMonthIndex(item.startMonth),
     enabled: item.enabled !== false,
   })
 }

@@ -29,12 +29,12 @@ describe('Managing monthly expenses', () => {
   it('cancels delete and then removes an expense after confirm', () => {
     cy.expenseRow('Insurance').findByTest('expense-delete').click()
     cy.confirmReject('Remove this expense?')
-    cy.expectExpenseCount(5)
+    cy.expectExpenseCount(6)
 
     cy.expenseRow('Insurance').findByTest('expense-delete').click()
     cy.getByTest('confirm-message').should('contain', 'Insurance')
     cy.confirmAccept('Remove this expense?')
-    cy.expectExpenseCount(4)
+    cy.expectExpenseCount(5)
     cy.getByTest('expense-row').should('not.contain', 'Insurance')
     cy.expectKpi('monthly-expenses', '$2,329')
     cy.expectNoSheetLine('Insurance')
