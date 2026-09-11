@@ -1,0 +1,50 @@
+describe('Starting with a blank plan', () => {
+  beforeEach(() => {
+    cy.visitApp()
+    cy.startBlankPlan()
+  })
+
+  it('clears sample numbers and shows empty editors', () => {
+    cy.expectToast('Blank plan ready')
+    cy.expectSampleBanner(false)
+    cy.getByTest('hero-blank-plan').should('not.exist')
+    cy.getByTest('hero-load-sample').should('be.visible').and('contain', 'Load sample')
+    cy.expectBlankKpis()
+    cy.expectRevenueCount(0)
+    cy.getByTest('revenue-empty').should('contain', 'Add a service or product')
+    cy.expectExpenseCount(0)
+    cy.getByTest('expense-empty').should('contain', 'rent, software, supplies')
+    cy.getByTest('chart-revenue-mix-empty').should('have.text', 'Add a service to see the mix.')
+    cy.getByTest('chart-expense-mix-empty').should('have.text', 'Add an expense to see the mix.')
+    cy.expectSheetYear('Total revenue', '$0')
+    cy.expectSheetYear('Net profit', '$0')
+  })
+
+  it('lets a user add a first service and expense', () => {
+    cy.clickByTest('revenue-add')
+    cy.expectRevenueCount(1)
+    cy.revenueCard('New service').within(() => {
+      cy.getByTest('revenue-preview').should('contain', '$0/mo')
+      cy.fillText('revenue-name', 'House cleaning')
+      cy.fillNumber('revenue-price', 120)
+      cy.fillNumber('revenue-units', 8)
+      cy.fillNumber('revenue-cost', 30)
+    })
+    cy.expectRevenuePreview('House cleaning', '$960')
+    cy.expectKpi('monthly-revenue', '$960')
+    cy.getByTest('chart-revenue-mix-empty').should('not.exist')
+    cy.getByTest('chart-revenue-mix-canvas').should('be.visible')
+
+    cy.clickByTest('expense-add')
+    cy.expectExpenseCount(1)
+    cy.expenseRow('New expense').within(() => {
+      cy.fillText('expense-name', 'Van insurance')
+      cy.fillNumber('expense-amount', 150)
+    })
+    cy.expectKpi('monthly-expenses', '$150')
+    cy.expectKpi('monthly-profit', '$570')
+    cy.getByTest('chart-expense-mix-empty').should('not.exist')
+    cy.expectSheetYear('House cleaning', '$11,520')
+    cy.expectSheetYear('Van insurance', '$1,800')
+  })
+})

@@ -38,10 +38,17 @@ function cellClass(value, kind) {
   if (kind !== 'profit' || value == null) return undefined
   return value < 0 ? 'is-neg' : 'is-pos'
 }
+
+const sheetTablePt = {
+  root: { 'data-test': 'sheet' },
+  bodyRow: ({ instance }) => ({
+    'data-test': `sheet-row-${instance?.rowData?.key ?? instance?.$props?.rowData?.key ?? ''}`,
+  }),
+}
 </script>
 
 <template>
-  <Card class="sheet-card">
+  <Card class="sheet-card" data-test="sheet-card">
     <template #title>12-month spreadsheet</template>
     <template #subtitle>
       Edit price, units, attach rate, or expense amount here — the year view updates as you type
@@ -50,6 +57,7 @@ function cellClass(value, kind) {
       <DataTable
         :value="store.sheetRows"
         :row-class="rowClass"
+        :pt="sheetTablePt"
         data-key="key"
         scrollable
         scroll-height="36rem"
@@ -60,9 +68,9 @@ function cellClass(value, kind) {
       >
         <Column field="label" header="Line" frozen style="min-width: 15rem">
           <template #body="{ data }">
-            <div class="line-name">
-              <span>{{ data.label }}</span>
-              <Tag v-if="data.kind === 'upsell'" value="Upsell" severity="info" />
+            <div class="line-name" :data-test="`sheet-line-${data.key}`">
+              <span data-test="sheet-line-label">{{ data.label }}</span>
+              <Tag v-if="data.kind === 'upsell'" value="Upsell" severity="info" data-test="sheet-upsell-tag" />
             </div>
           </template>
         </Column>
@@ -78,6 +86,7 @@ function cellClass(value, kind) {
               :min="0"
               :min-fraction-digits="0"
               :max-fraction-digits="2"
+              data-test="sheet-price"
               @update:model-value="onPriceChange(data, $event)"
             />
           </template>
@@ -91,6 +100,7 @@ function cellClass(value, kind) {
               :min="0"
               :min-fraction-digits="0"
               :max-fraction-digits="2"
+              data-test="sheet-qty"
               @update:model-value="onQtyChange(data, $event)"
             />
             <InputNumber
@@ -101,6 +111,7 @@ function cellClass(value, kind) {
               :max="100"
               :min-fraction-digits="0"
               :max-fraction-digits="1"
+              data-test="sheet-qty"
               @update:model-value="onQtyChange(data, $event)"
             />
           </template>
@@ -113,7 +124,11 @@ function cellClass(value, kind) {
           style="min-width: 6.1rem"
         >
           <template #body="{ data }">
-            <span v-if="data.months[index] != null" :class="cellClass(data.months[index], data.kind)">
+            <span
+              v-if="data.months[index] != null"
+              :class="cellClass(data.months[index], data.kind)"
+              :data-test="`sheet-month-${index}`"
+            >
               {{ store.money(data.months[index]) }}
             </span>
           </template>
@@ -121,7 +136,7 @@ function cellClass(value, kind) {
 
         <Column header="Year" frozen align-frozen="right" style="min-width: 7rem">
           <template #body="{ data }">
-            <strong v-if="data.year != null" :class="cellClass(data.year, data.kind)">
+            <strong v-if="data.year != null" :class="cellClass(data.year, data.kind)" data-test="sheet-year">
               {{ store.money(data.year) }}
             </strong>
           </template>

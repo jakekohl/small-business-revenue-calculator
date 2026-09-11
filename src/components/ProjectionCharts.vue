@@ -63,36 +63,36 @@ const hasExpenseMix = computed(() => store.expenseMixChart.labels.length > 0)
 </script>
 
 <template>
-  <section class="charts" aria-label="Charts">
-    <Card class="charts__trend">
+  <section class="charts" aria-label="Charts" data-test="charts">
+    <Card class="charts__trend" data-test="chart-trend">
       <template #title>12-month outlook</template>
       <template #subtitle>Revenue, expenses, and profit as you change the numbers</template>
       <template #content>
-        <div class="chart-frame chart-frame--trend">
+        <div class="chart-frame chart-frame--trend" data-test="chart-trend-canvas">
           <Chart type="line" :data="store.trendChart" :options="trendOptions" :height="280" />
         </div>
       </template>
     </Card>
 
-    <Card class="charts__mix">
+    <Card class="charts__mix" data-test="chart-revenue-mix">
       <template #title>Revenue mix</template>
       <template #subtitle>Share of yearly revenue</template>
       <template #content>
-        <div v-if="hasRevenueMix" class="chart-frame">
+        <div v-if="hasRevenueMix" class="chart-frame" data-test="chart-revenue-mix-canvas">
           <Chart type="doughnut" :data="store.revenueMixChart" :options="doughnutOptions" :height="220" />
         </div>
-        <p v-else class="empty">Add a service to see the mix.</p>
+        <p v-else class="empty" data-test="chart-revenue-mix-empty">Add a service to see the mix.</p>
       </template>
     </Card>
 
-    <Card class="charts__mix">
+    <Card class="charts__mix" data-test="chart-expense-mix">
       <template #title>Expense mix</template>
       <template #subtitle>Share of yearly expenses</template>
       <template #content>
-        <div v-if="hasExpenseMix" class="chart-frame">
+        <div v-if="hasExpenseMix" class="chart-frame" data-test="chart-expense-mix-canvas">
           <Chart type="doughnut" :data="store.expenseMixChart" :options="doughnutOptions" :height="220" />
         </div>
-        <p v-else class="empty">Add an expense to see the mix.</p>
+        <p v-else class="empty" data-test="chart-expense-mix-empty">Add an expense to see the mix.</p>
       </template>
     </Card>
   </section>
