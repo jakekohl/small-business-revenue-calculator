@@ -6,11 +6,15 @@ import InputText from 'primevue/inputtext'
 import Select from 'primevue/select'
 import ToggleSwitch from 'primevue/toggleswitch'
 import { useConfirm } from 'primevue/useconfirm'
-import { EXPENSE_CATEGORIES } from '../utils/sampleData.js'
+import { EXPENSE_CATEGORIES, EXPENSE_DUE_MONTHS, EXPENSE_FREQUENCIES } from '../utils/sampleData.js'
 import { useProjectionStore } from '../stores/projection.js'
 
 const store = useProjectionStore()
 const confirm = useConfirm()
+
+function dueMonthLabel(expense) {
+  return expense.frequency === 'quarterly' ? 'First due month' : 'Due month'
+}
 
 function onDelete(expense) {
   confirm.require({
@@ -26,11 +30,11 @@ function onDelete(expense) {
 
 <template>
   <Card class="editor" data-test="expense-editor">
-    <template #title>Monthly expenses</template>
+    <template #title>Expenses</template>
     <template #subtitle>What it costs to keep the business running</template>
     <template #content>
       <div v-if="!store.expenses.length" class="empty" data-test="expense-empty">
-        <p>Add rent, software, supplies, and anything else that repeats each month.</p>
+        <p>Add rent, software, quarterly taxes, and anything else the business pays.</p>
         <Button label="Add an expense" icon="pi pi-plus" data-test="expense-add" @click="store.addExpense" />
       </div>
 
@@ -42,12 +46,14 @@ function onDelete(expense) {
         data-test="expense-row"
       >
         <ToggleSwitch
+          class="expense__toggle"
           :model-value="expense.enabled"
           :input-id="`exp-on-${expense.id}`"
           data-test="expense-enabled"
           @update:model-value="store.updateExpense(expense.id, { enabled: $event })"
         />
         <InputText
+          class="expense__name"
           :model-value="expense.name"
           placeholder="Expense name"
           aria-label="Expense name"
@@ -55,6 +61,7 @@ function onDelete(expense) {
           @update:model-value="store.updateExpense(expense.id, { name: $event })"
         />
         <Select
+          class="expense__category"
           :model-value="expense.category"
           :options="EXPENSE_CATEGORIES"
           option-label="label"
@@ -65,6 +72,7 @@ function onDelete(expense) {
           @update:model-value="store.updateExpense(expense.id, { category: $event })"
         />
         <InputNumber
+          class="expense__amount"
           :model-value="expense.amount"
           mode="currency"
           currency="USD"
@@ -72,11 +80,12 @@ function onDelete(expense) {
           :min="0"
           :min-fraction-digits="0"
           :max-fraction-digits="2"
-          aria-label="Monthly amount"
+          aria-label="Amount"
           data-test="expense-amount"
           @update:model-value="store.updateExpense(expense.id, { amount: $event ?? 0 })"
         />
         <Button
+          class="expense__delete"
           icon="pi pi-trash"
           severity="danger"
           text
@@ -85,6 +94,29 @@ function onDelete(expense) {
           data-test="expense-delete"
           @click="onDelete(expense)"
         />
+        <div class="expense__cadence">
+          <Select
+            :model-value="expense.frequency"
+            :options="EXPENSE_FREQUENCIES"
+            option-label="label"
+            option-value="value"
+            aria-label="Frequency"
+            data-test="expense-frequency"
+            :pt="{ overlay: { 'data-test': 'expense-frequency-overlay' } }"
+            @update:model-value="store.updateExpense(expense.id, { frequency: $event })"
+          />
+          <Select
+            v-if="expense.frequency !== 'monthly'"
+            :model-value="expense.startMonth"
+            :options="EXPENSE_DUE_MONTHS"
+            option-label="label"
+            option-value="value"
+            :aria-label="dueMonthLabel(expense)"
+            data-test="expense-due-month"
+            :pt="{ overlay: { 'data-test': 'expense-due-month-overlay' } }"
+            @update:model-value="store.updateExpense(expense.id, { startMonth: $event ?? 0 })"
+          />
+        </div>
       </article>
 
       <Button
@@ -126,6 +158,9 @@ function onDelete(expense) {
 .expense {
   display: grid;
   grid-template-columns: auto minmax(0, 1.2fr) minmax(9rem, 0.9fr) minmax(7.5rem, 0.7fr) auto;
+  grid-template-areas:
+    'toggle name category amount delete'
+    '. cadence cadence cadence .';
   gap: 0.5rem;
   align-items: center;
   margin-bottom: 0.65rem;
@@ -133,6 +168,33 @@ function onDelete(expense) {
   border: 1px solid #e4ece8;
   border-radius: 0.9rem;
   background: #fbfdfc;
+}
+
+.expense__toggle {
+  grid-area: toggle;
+}
+
+.expense__name {
+  grid-area: name;
+}
+
+.expense__category {
+  grid-area: category;
+}
+
+.expense__amount {
+  grid-area: amount;
+}
+
+.expense__delete {
+  grid-area: delete;
+}
+
+.expense__cadence {
+  grid-area: cadence;
+  display: grid;
+  grid-template-columns: minmax(9rem, 1fr) minmax(9rem, 1fr);
+  gap: 0.5rem;
 }
 
 .expense--off {
@@ -147,11 +209,15 @@ function onDelete(expense) {
 @media (max-width: 700px) {
   .expense {
     grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'toggle name delete'
+      'category category category'
+      'amount amount amount'
+      'cadence cadence cadence';
   }
 
-  .expense :deep(.p-select),
-  .expense :deep(.p-inputnumber) {
-    grid-column: 1 / -1;
+  .expense__cadence {
+    grid-template-columns: 1fr;
   }
 }
 </style>

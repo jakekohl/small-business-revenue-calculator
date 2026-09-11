@@ -1,6 +1,6 @@
 # Business Projector
 
-A local web app for projecting small-business growth from revenue opportunities, upsells, and monthly expenses.
+A local web app for projecting small-business growth from revenue opportunities, upsells, and expenses (monthly or scheduled).
 
 ```bash
 npm install

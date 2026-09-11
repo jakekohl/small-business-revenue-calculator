@@ -143,7 +143,7 @@ export const useProjectionStore = defineStore('projection', () => {
     rows.push({
       key: 'sec-exp',
       kind: 'section',
-      label: 'Monthly expenses',
+      label: 'Expenses',
       months: Array(MONTH_COUNT).fill(null),
       year: null,
     })
@@ -239,10 +239,11 @@ export const useProjectionStore = defineStore('projection', () => {
 
   const expenseMixChart = computed(() => {
     const totals = new Map()
+    const months = projection.value.months
     for (const expense of expenses.value) {
       if (!expense.enabled) continue
       const key = categoryLabel(expense.category)
-      const yearly = (Number(expense.amount) || 0) * MONTH_COUNT
+      const yearly = months.reduce((total, month) => total + (month.byExpense[expense.id] || 0), 0)
       totals.set(key, (totals.get(key) || 0) + yearly)
     }
 
@@ -251,7 +252,7 @@ export const useProjectionStore = defineStore('projection', () => {
       datasets: [
         {
           data: [...totals.values()].map((value) => Math.round(value)),
-          backgroundColor: ['#c2410c', '#b45309', '#0369a1', '#0f766e', '#7c3aed', '#be123c', '#57534e'],
+          backgroundColor: ['#c2410c', '#b45309', '#0369a1', '#0f766e', '#7c3aed', '#be123c', '#57534e', '#0e7490'],
         },
       ],
     }

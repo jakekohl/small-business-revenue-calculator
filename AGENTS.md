@@ -1,6 +1,6 @@
 # Agent instructions
 
-This repo is **Business Projector**, a local Vue 3 app for projecting small-business revenue, upsells, and monthly expenses.
+This repo is **Business Projector**, a local Vue 3 app for projecting small-business revenue, upsells, and expenses (monthly or on a due month).
 
 This file is the **single source of truth** for coding agents. Vendor files (`CLAUDE.md`, `.github/copilot-instructions.md`, `.cursor/rules`, `.gemini/settings.json`) only point here. Put new conventions in this file, not in a tool-specific folder.
 

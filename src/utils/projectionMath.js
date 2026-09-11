@@ -1,5 +1,32 @@
 export const MONTH_COUNT = 12
 
+const EXPENSE_FREQUENCY_VALUES = new Set(['monthly', 'quarterly', 'annually', 'once'])
+
+export function clampMonthIndex(value) {
+  const month = Math.trunc(Number(value) || 0)
+  if (month < 0) return 0
+  if (month > MONTH_COUNT - 1) return MONTH_COUNT - 1
+  return month
+}
+
+export function normalizeExpenseFrequency(value) {
+  return EXPENSE_FREQUENCY_VALUES.has(value) ? value : 'monthly'
+}
+
+export function expenseAmountForMonth(expense, monthIndex) {
+  if (!expense?.enabled) return 0
+  const amount = Number(expense.amount) || 0
+  const frequency = normalizeExpenseFrequency(expense.frequency)
+  const startMonth = clampMonthIndex(expense.startMonth)
+
+  if (frequency === 'monthly') return amount
+  if (frequency === 'annually' || frequency === 'once') {
+    return monthIndex === startMonth ? amount : 0
+  }
+  if (((monthIndex - startMonth) % 3 + 3) % 3 === 0) return amount
+  return 0
+}
+
 export function unitsForMonth(unitsPerMonth, growthRatePct, monthIndex) {
   const units = Number(unitsPerMonth) || 0
   const rate = (Number(growthRatePct) || 0) / 100
@@ -56,7 +83,7 @@ export function buildProjection({ revenues = [], expenses = [], growthRatePct = 
     const byExpense = {}
     let expenseTotal = 0
     for (const item of expenses) {
-      const amount = item.enabled ? Number(item.amount) || 0 : 0
+      const amount = expenseAmountForMonth(item, monthIndex)
       byExpense[item.id] = amount
       expenseTotal += amount
     }
