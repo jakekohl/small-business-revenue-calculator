@@ -1,0 +1,23 @@
+{
+  "name": "inc-exp-calc",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@primeuix/themes": "^1.2.3",
+    "chart.js": "^4.5.1",
+    "pinia": "^4.0.3",
+    "primeicons": "^8.0.1",
+    "primevue": "^4.3.7",
+    "vue": "^3.5.42"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "vite": "^8.3.0"
+  }
+}
