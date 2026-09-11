@@ -164,6 +164,7 @@ function normalizeExpense(item = {}) {
   })
 }
 
+/** Map any saved/imported shape onto the current model. Older files must still load. */
 export function normalizeProjection(data) {
   if (!data || typeof data !== 'object') {
     throw new Error('That file is not a projection backup.')

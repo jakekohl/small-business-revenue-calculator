@@ -12,6 +12,7 @@ describe('Landing on the sample plan', () => {
     cy.getByTest('hero-blank-plan').should('be.visible').and('contain', 'Start with a blank plan')
     cy.getByTest('hero-load-sample').should('not.exist')
     cy.getByTest('hero-growth').should('be.visible')
+    cy.getByTest('changelog-open').should('be.visible').and('have.attr', 'aria-label', 'What’s new')
     cy.expectSampleBanner(true)
     cy.getByTest('save-note').should('contain', 'Saved automatically')
     cy.getByTest('footer').should('be.visible').and('contain', 'open source')

@@ -43,3 +43,11 @@ Cypress.Commands.add('upsellRow', (name) =>
 Cypress.Commands.add('sheetRowByLabel', (label) =>
   cy.contains('[data-test="sheet-line-label"]', label).closest('tr').should('exist'),
 )
+
+Cypress.Commands.add('changelogEntry', (title) =>
+  cy
+    .getByTestGlobal('changelog-entry')
+    .filter((_, el) => el.querySelector('[data-test="changelog-entry-title"]')?.textContent.includes(title))
+    .should('have.length.at.least', 1)
+    .first(),
+)
