@@ -17,6 +17,11 @@ describe('What’s new changelog', () => {
       cy.getByTest('changelog-entry-title').should('contain', 'What’s new')
       cy.getByTest('changelog-entry-summary').should('contain', 'star on the right')
       cy.getByTest('changelog-entry-date').should('contain', '2026')
+      cy.getByTest('changelog-entry-link').should(
+        'have.attr',
+        'href',
+        'https://github.com/jakekohl/small-business-revenue-calculator/pull/5',
+      )
     })
 
     cy.changelogEntry('Expenses on their due month').within(() => {

@@ -9,6 +9,7 @@ export const CHANGELOG = [
     type: 'feature',
     title: 'What’s new',
     summary: 'Tap the star on the right edge to see recent product updates, with links to GitHub when a pull request is listed.',
+    pr: 5,
   },
   {
     date: '2026-09-11',
