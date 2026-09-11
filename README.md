@@ -32,3 +32,7 @@ CI records runs to [Cypress Cloud](https://cloud.cypress.io) from `.github/workf
 3. Add the same values as GitHub Actions secrets `CYPRESS_PROJECT_ID` and `CYPRESS_RECORD_KEY`.
 
 Until those two values exist, the recorded GitHub Action job will fail on purpose so Cloud is not skipped silently.
+
+## AI contributors
+
+Coding-agent conventions live in [`AGENTS.md`](./AGENTS.md). That file is the source of truth for Cursor, GitHub Copilot, Claude Code, Gemini CLI, and other tools. Vendor-specific files only point at it — add new rules there, not in a tool folder.

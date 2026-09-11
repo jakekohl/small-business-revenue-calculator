@@ -1,0 +1,9 @@
+---
+description: Cypress E2E specs use support commands and data-test selectors
+globs: cypress/**/*.js, **/*.cy.js
+alwaysApply: false
+---
+
+# Cypress E2E
+
+Follow the Cypress section in [AGENTS.md](../../AGENTS.md).
