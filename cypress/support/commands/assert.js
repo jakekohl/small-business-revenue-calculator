@@ -73,6 +73,19 @@ Cypress.Commands.add('expectNoSheetLine', (label) => {
   cy.contains('[data-test="sheet-line-label"]', label).should('not.exist')
 })
 
+Cypress.Commands.add('expectSheetInputsFitCells', () => {
+  cy.getByTest('sheet').find('[data-test="sheet-price"], [data-test="sheet-qty"]').each(($el) => {
+    const input = $el.is('input') ? $el[0] : $el.find('input')[0]
+    const cell = input?.closest('td')
+    expect(input, 'sheet number input').to.exist
+    expect(cell, 'parent sheet cell').to.exist
+    const inputRect = input.getBoundingClientRect()
+    const cellRect = cell.getBoundingClientRect()
+    expect(inputRect.left, 'input left edge').to.be.at.least(cellRect.left - 1)
+    expect(inputRect.right, 'input right edge').to.be.at.most(cellRect.right + 1)
+  })
+})
+
 Cypress.Commands.add('expectSheetMonth', (label, monthIndex, money) => {
   cy.sheetRowByLabel(label)
     .find(`[data-test="sheet-month-${monthIndex}"]`)

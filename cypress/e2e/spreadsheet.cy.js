@@ -3,6 +3,13 @@ describe('Editing from the 12-month spreadsheet', () => {
     cy.visitApp()
   })
 
+  it('keeps price and qty inputs inside their cells', () => {
+    cy.sheetRowByLabel('Signature service').within(() => {
+      cy.getByTest('sheet-qty').click()
+    })
+    cy.expectSheetInputsFitCells()
+  })
+
   it('updates KPIs and the matching editor when a service price changes in the sheet', () => {
     cy.sheetRowByLabel('Signature service').within(() => {
       cy.fillNumber('sheet-price', 100)
