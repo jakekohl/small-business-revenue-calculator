@@ -1,0 +1,52 @@
+describe('Landing on the sample plan', () => {
+  beforeEach(() => {
+    cy.visitApp()
+  })
+
+  it('shows the planner chrome and sample banner', () => {
+    cy.getByTest('hero').should('be.visible')
+    cy.getByTest('hero-title').should('have.text', 'Business Projector')
+    cy.getByTest('hero-lede').should('contain', 'price change')
+    cy.getByTest('hero-export').should('be.visible').and('contain', 'Export')
+    cy.getByTest('hero-import').should('be.visible').and('contain', 'Import')
+    cy.getByTest('hero-blank-plan').should('be.visible').and('contain', 'Start with a blank plan')
+    cy.getByTest('hero-load-sample').should('not.exist')
+    cy.getByTest('hero-growth').should('be.visible')
+    cy.expectSampleBanner(true)
+    cy.getByTest('save-note').should('contain', 'Saved automatically')
+  })
+
+  it('shows sample KPI snapshot values', () => {
+    cy.getByTest('kpi-grid').should('be.visible')
+    cy.expectKpiLabel('monthly-revenue', 'This month’s revenue')
+    cy.expectKpiLabel('monthly-expenses', 'This month’s expenses')
+    cy.expectKpiLabel('monthly-profit', 'This month’s profit')
+    cy.expectKpiLabel('year-profit', 'Year profit')
+    cy.expectKpiLabel('break-even', 'Break-even')
+    cy.expectSampleKpis()
+  })
+
+  it('renders charts, editors, and the 12-month sheet', () => {
+    cy.getByTest('charts').should('be.visible')
+    cy.getByTest('chart-trend').should('contain', '12-month outlook')
+    cy.getByTest('chart-trend-canvas').should('be.visible')
+    cy.getByTest('chart-revenue-mix-canvas').should('be.visible')
+    cy.getByTest('chart-expense-mix-canvas').should('be.visible')
+    cy.getByTest('chart-revenue-mix-empty').should('not.exist')
+    cy.getByTest('chart-expense-mix-empty').should('not.exist')
+
+    cy.expectRevenueCount(2)
+    cy.expectRevenuePreview('Signature service', '$3,700')
+    cy.expectRevenuePreview('Premium package', '$1,884')
+    cy.expectExpenseCount(5)
+    cy.expenseRow('Studio rent').should('be.visible')
+    cy.expenseRow('Marketing').should('be.visible')
+
+    cy.getByTest('sheet-card').should('contain', '12-month spreadsheet')
+    cy.expectSheetYear('Total revenue', '$67,008')
+    cy.expectSheetYear('Total expenses', '$29,628')
+    cy.expectSheetYear('Net profit', '$28,740')
+    cy.expectSheetMonth('Total revenue', 0, '$5,584')
+    cy.sheetRowByLabel('Add-on treatment').findByTest('sheet-upsell-tag').should('contain', 'Upsell')
+  })
+})

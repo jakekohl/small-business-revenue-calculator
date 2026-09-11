@@ -1,0 +1,27 @@
+{
+  "settings": {
+    "currency": "USD",
+    "growthRatePct": 0,
+    "isSampleData": false
+  },
+  "revenues": [
+    {
+      "id": "import-rev-1",
+      "name": "Imported lawn care",
+      "unitPrice": 200,
+      "unitsPerMonth": 10,
+      "costPerUnit": 40,
+      "enabled": true,
+      "upsells": []
+    }
+  ],
+  "expenses": [
+    {
+      "id": "import-exp-1",
+      "name": "Imported van lease",
+      "amount": 500,
+      "category": "other",
+      "enabled": true
+    }
+  ]
+}
