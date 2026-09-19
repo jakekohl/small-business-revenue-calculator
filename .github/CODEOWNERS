@@ -1,3 +1,12 @@
-# Protect the workflow that can approve and auto-merge Dependabot PRs.
-/.github/workflows/dependabot-auto-merge.yml @jakekohl
-/.github/dependabot.yml @jakekohl
+# Human PRs need the repo owner's review.
+* @jakekohl
+
+# Dependabot-only paths: leave unowned so the auto-merge workflow's
+# approval satisfies the 1-review rule (checks still required).
+package-lock.json
+package.json
+.github/workflows/*.yml
+
+# Keep the auto-merge automation itself owner-protected.
+.github/workflows/dependabot-auto-merge.yml @jakekohl
+.github/dependabot.yml @jakekohl
