@@ -13,7 +13,7 @@
     "test:e2e:open": "npm run build && start-server-and-test preview http://127.0.0.1:4173 cypress:open"
   },
   "dependencies": {
-    "@primeuix/themes": "^1.2.3",
+    "@primeuix/themes": "^3.0.0",
     "chart.js": "^4.5.1",
     "pinia": "^4.0.3",
     "primeicons": "^8.0.1",
