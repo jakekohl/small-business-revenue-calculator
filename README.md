@@ -23,18 +23,6 @@ Open the Cypress app against the same preview server:
 npm run test:e2e:open
 ```
 
-## Cypress Cloud
-
-[![Small Business Calculator](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/erx41d&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/erx41d/runs)
-
-CI records runs to [Cypress Cloud](https://cloud.cypress.io) from `.github/workflows/cypress.yml`.
-
-1. Create a project at [Cypress Cloud](https://cloud.cypress.io).
-2. Copy `.env.example` to `.env` and set `CYPRESS_PROJECT_ID` and `CYPRESS_RECORD_KEY` (`.env` is gitignored).
-3. Add the same values as GitHub Actions secrets `CYPRESS_PROJECT_ID` and `CYPRESS_RECORD_KEY`.
-
-Until those two values exist, the recorded GitHub Action job will fail on purpose so Cloud is not skipped silently.
-
 ## AI contributors
 
 Coding-agent conventions live in [`AGENTS.md`](./AGENTS.md). That file is the source of truth for Cursor, GitHub Copilot, Claude Code, Gemini CLI, and other tools. Vendor-specific files only point at it — add new rules there, not in a tool folder.
