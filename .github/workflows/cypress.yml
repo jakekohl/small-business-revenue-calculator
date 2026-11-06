@@ -15,7 +15,7 @@ jobs:
           cache: npm
 
       - name: Run Cypress E2E
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           browser: chrome
           build: npm run build
